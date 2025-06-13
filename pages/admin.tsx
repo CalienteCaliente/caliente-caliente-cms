@@ -1,12 +1,29 @@
 import { useState } from 'react';
 
+interface Campaign {
+  id: number;
+  title: string;
+  message: string;
+  zone: string;
+}
+
 export default function Admin() {
-  const [campaigns, setCampaigns] = useState([]);
-  const [newCampaign, setNewCampaign] = useState({ title: '', message: '', zone: '' });
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [newCampaign, setNewCampaign] = useState({
+    title: '',
+    message: '',
+    zone: ''
+  });
 
   const addCampaign = () => {
     if (!newCampaign.title || !newCampaign.message || !newCampaign.zone) return;
-    setCampaigns([...campaigns, { ...newCampaign, id: Date.now() }]);
+
+    const campaign: Campaign = {
+      ...newCampaign,
+      id: Date.now()
+    };
+
+    setCampaigns([...campaigns, campaign]);
     setNewCampaign({ title: '', message: '', zone: '' });
   };
 
